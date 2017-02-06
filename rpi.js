@@ -78,7 +78,7 @@ rpi.pinOut = function(pin, value, callback){
     console.log("RPi GPIO " + pin + " = " + value);
     rpi.GPIO.write(pin, value, callback);
   }else{
-    callback('rpi-gpio not loaded');
+    callback('rpi-gpio not loaded', null);
   }
 };
 
