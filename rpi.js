@@ -30,6 +30,14 @@ rpi.init = function(onInit){
 		}
 		return;
 	}
+
+	try {
+    const lib_rpiGpio = require('rpi-gpio');
+    rpi.GPIO = lib_rpiGpio;
+	} catch (ex) {
+		console.log("Could not initialize GPIO library.");
+		return;
+	}
   rpi.setupGpio(onInit);
 }
 
@@ -58,7 +66,7 @@ rpi.setupGpio = function(onSetupComplete){
 	        console.log("RPi GPIO setup error " + err);
 				}
 				if (onSetupComplete) {
-					onSetupComplete(err)
+					onSetupComplete(err);
 				}
 	    }
 		);

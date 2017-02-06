@@ -4,6 +4,7 @@
   "description": "Raspberry Pi robot on wheels using Node.js",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "nodemon index.js"
   },
   "repository": {
@@ -21,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/aharshac/node-bot/issues"
   },
-  "homepage": "https://github.com/aharshac/node-bot#readme"
+  "homepage": "https://github.com/aharshac/node-bot#readme",
+  "dependencies": {
+    "async": "^2.1.4",
+    "rpi-gpio": "^0.7.0"
+  }
 }
