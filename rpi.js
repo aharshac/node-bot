@@ -39,7 +39,7 @@ rpi.init = function(onInit){
 		return;
 	}
   rpi.setupGpio(onInit);
-}
+};
 
 // Initialize GPIO
 rpi.setupGpio = function(onSetupComplete){
@@ -71,7 +71,7 @@ rpi.setupGpio = function(onSetupComplete){
 	    }
 		);
 	}
-}
+};
 
 rpi.pinOut = function(pin, value, callback = null){
   if(rpi.isRpi && rpi.GPIO != null && rpi.gpio_loaded){
@@ -80,6 +80,6 @@ rpi.pinOut = function(pin, value, callback = null){
   }else{
     callback('rpi-gpio not loaded');
   }
-}
+};
 
 module.exports = rpi;
