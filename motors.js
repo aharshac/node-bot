@@ -15,10 +15,10 @@ motors.pins = {
 motors.goForward = function(){
   async.parallel([
     function(callback) {
-			rpi.pinOut(motors.leftForward, true, callback);
+			rpi.pinOut(motors.pins.leftForward, true, callback);
 		},
     function(callback) {
-			rpi.pinOut(motors.rightForward, true, callback);
+			rpi.pinOut(motors.pins.rightForward, true, callback);
 		}
   ]);
 };
@@ -26,10 +26,10 @@ motors.goForward = function(){
 motors.goReverse = function(){
   async.parallel([
 		function(callback) {
-			rpi.pinOut(motors.leftReverse, true, callback);
+			rpi.pinOut(motors.pins.leftReverse, true, callback);
 		},
     function(callback) {
-			rpi.pinOut(motors.rightReverse, true, callback);
+			rpi.pinOut(motors.pins.rightReverse, true, callback);
 		}
   ]);
 };
@@ -37,10 +37,10 @@ motors.goReverse = function(){
 motors.turnLeft = function(){
   async.parallel([
 		function(callback) {
-			rpi.pinOut(motors.leftReverse, true, callback);
+			rpi.pinOut(motors.pins.leftReverse, true, callback);
 		},
   	function(callback) {
-			rpi.pinOut(motors.rightForward, true, callback);
+			rpi.pinOut(motors.pins.rightForward, true, callback);
 		}
 	]);
 };
@@ -48,10 +48,10 @@ motors.turnLeft = function(){
 motors.turnRight = function(){
   async.parallel([
 		function(callback) {
-			rpi.pinOut(motors.rightReverse, true, callback);
+			rpi.pinOut(motors.pins.rightReverse, true, callback);
 		},
     function(callback) {
-			rpi.pinOut(motors.leftForward, true, callback);
+			rpi.pinOut(motors.pins.leftForward, true, callback);
 		}
   ]);
 };
@@ -59,16 +59,16 @@ motors.turnRight = function(){
 motors.stop = function(){
   async.parallel([
 		function(callback) {
-			rpi.pinOut(motors.leftForward, false, callback);
+			rpi.pinOut(motors.pins.leftForward, false, callback);
 		},
 		function(callback) {
-    	rpi.pinOut(motors.rightForward, false, callback);
+    	rpi.pinOut(motors.pins.rightForward, false, callback);
 		},
 		function(callback) {
-			rpi.pinOut(motors.rightReverse, false, callback);
+			rpi.pinOut(motors.pins.rightReverse, false, callback);
 		},
     function(callback) {
-			rpi.pinOut(motors.leftReverse, false, callback);
+			rpi.pinOut(motors.pins.leftReverse, false, callback);
 		}
   ]);
 };
