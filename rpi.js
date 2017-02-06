@@ -73,12 +73,12 @@ rpi.setupGpio = function(onSetupComplete){
 	}
 };
 
-rpi.pinOut = function(pin, value, callback){
+rpi.pinOut = function(pin, value, callback) {
   if(rpi.isRpi && rpi.GPIO != null && rpi.gpio_loaded){
     console.log("RPi GPIO " + pin + " = " + value);
     rpi.GPIO.write(pin, value, callback);
   }else{
-    callback('rpi-gpio not loaded', null);
+    callback(true, null);
   }
 };
 
