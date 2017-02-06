@@ -76,7 +76,7 @@ rpi.setupGpio = function(onSetupComplete){
 rpi.pinOut = function(pin, value, callback) {
   if(rpi.isRpi && rpi.GPIO != null && rpi.gpio_loaded) {
     rpi.GPIO.write(pin, value, callback);
-  }else{
+  } else {
     callback(true, null);
   }
 };

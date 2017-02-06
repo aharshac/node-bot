@@ -26,10 +26,12 @@ motors.goForward = function(){
 motors.goReverse = function(){
   async.parallel([
 		function(callback) {
-			rpi.pinOut(motors.pins.leftReverse, true, callback);
+			//rpi.pinOut(motors.pins.leftReverse, true, callback);
+			callback(false, 1);
 		},
     function(callback) {
-			rpi.pinOut(motors.pins.rightReverse, true, callback);
+			//rpi.pinOut(motors.pins.rightReverse, true, callback);
+			callback(false, 1);
 		}
   ]);
 };
