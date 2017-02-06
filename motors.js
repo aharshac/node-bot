@@ -27,7 +27,7 @@ motors.goReverse = function(){
   async.parallel([
 		function(callback) {
 			rpi.pinOut(motors.leftReverse, true, callback);
-		}
+		},
     function(callback) {
 			rpi.pinOut(motors.rightReverse, true, callback);
 		}
