@@ -1,0 +1,25 @@
+{
+  "name": "node-bot",
+  "version": "1.0.0",
+  "description": "Raspberry Pi robot on wheels using Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aharshac/node-bot.git"
+  },
+  "keywords": [
+    "node",
+    "raspberry",
+    "pi",
+    "robot"
+  ],
+  "author": "Harsha C. Alva",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aharshac/node-bot/issues"
+  },
+  "homepage": "https://github.com/aharshac/node-bot#readme"
+}
