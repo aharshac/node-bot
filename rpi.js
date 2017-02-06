@@ -74,11 +74,12 @@ rpi.setupGpio = function(onSetupComplete){
 };
 
 rpi.pinOut = function(pin, value, callback) {
-  if(rpi.isRpi && rpi.GPIO != null && rpi.gpio_loaded) {
-    rpi.GPIO.write(pin, value, callback);
-  } else {
-    callback(true, null);
-  }
+  // if(rpi.isRpi && rpi.GPIO != null && rpi.gpio_loaded) {
+  //   rpi.GPIO.write(pin, value, callback);
+  // } else {
+  //   callback(true, null);
+  // }
+	callback(false, 1);
 };
 
 module.exports = rpi;
