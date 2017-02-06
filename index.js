@@ -3,6 +3,6 @@ const motors = require('./motors');
 
 rpi.init(function(error){
   if (!error) {
-    motors.goForward();
+    motors.goReverse();
   }
 });
