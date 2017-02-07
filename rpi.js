@@ -55,16 +55,16 @@ const rpi = {
 	    async.parallel(
 				[
 		      function(callback) {
-		        this.GPIO.setup(motors.pins.leftForward, this.GPIO.DIR_OUT, callback);    // leftForward
+		        rpi.GPIO.setup(motors.pins.leftForward, rpi.GPIO.DIR_OUT, callback);    // leftForward
 		      },
 		      function(callback) {
-		        this.GPIO.setup(motors.pins.leftReverse, this.GPIO.DIR_OUT, callback);    // leftReverse
+		        rpi.GPIO.setup(motors.pins.leftReverse, rpi.GPIO.DIR_OUT, callback);    // leftReverse
 		      },
 					function(callback) {
-		        this.GPIO.setup(motors.pins.rightForward, this.GPIO.DIR_OUT, callback);    // rightForward
+		        rpi.GPIO.setup(motors.pins.rightForward, rpi.GPIO.DIR_OUT, callback);    // rightForward
 		      },
 		      function(callback) {
-		        this.GPIO.setup(motors.pins.rightReverse, this.GPIO.DIR_OUT, callback);    // rightReverse
+		        rpi.GPIO.setup(motors.pins.rightReverse, rpi.GPIO.DIR_OUT, callback);    // rightReverse
 		      },
 		    ],
 				function(err, results) {
@@ -81,8 +81,8 @@ const rpi = {
 	},
 
 	pinOut: function(pin, value, callback) {
-	  if(this.isRpi() && this.GPIO != null && this.gpio_loaded) {
-	    this.GPIO.write(pin, value, callback);
+	  if(this.isRpi() && rpi.GPIO != null && this.gpio_loaded) {
+	    rpi.GPIO.write(pin, value, callback);
 	  } else {
 	    callback(true, null);
 	  }
