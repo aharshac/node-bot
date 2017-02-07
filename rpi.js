@@ -74,12 +74,20 @@ rpi.setupGpio = function(onSetupComplete){
 };
 
 rpi.pinOut = function(pin, value, callback) {
-  // if(rpi.isRpi && rpi.GPIO != null && rpi.gpio_loaded) {
-  //   rpi.GPIO.write(pin, value, callback);
-  // } else {
-  //   callback(true, null);
-  // }
-	callback(false, 1);
+  if(rpi.isRpi && rpi.GPIO != null && rpi.gpio_loaded) {
+    rpi.GPIO.write(pin, value, callback);
+  } else {
+    callback(true, null);
+  }
+	//callback(false, 1);
+};
+
+rpi.pinHigh = function(pin, callback) {
+	rpi.pinOut(pin, true, callback);
+};
+
+rpi.pinLow = function(pin, callback) {
+	rpi.pinOut(pin, false, callback);
 };
 
 module.exports = rpi;

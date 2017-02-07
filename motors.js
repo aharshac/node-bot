@@ -15,10 +15,10 @@ motors.pins = {
 motors.goForward = function() {
   async.parallel([
     function(callback) {
-			rpi.pinOut(motors.pins.leftForward, true, callback);
+			rpi.pinHigh(motors.pins.leftForward, callback);
 		},
     function(callback) {
-			rpi.pinOut(motors.pins.rightForward, true, callback);
+			rpi.pinHigh(motors.pins.rightForward, callback);
 		}
   ]);
 };
