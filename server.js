@@ -4,8 +4,6 @@ const serveStatic = require('serve-static');
 const httpLib = require('http');
 const socketLib = require('socket.io');
 const path = require('path');
-const expressLogging = require('express-logging');
-const logops = require('logops');
 
 const motors = require('./motors');
 
@@ -23,8 +21,7 @@ const server = {
 
     server.app.set('port', server.port);
     server.app.use(compression());
-    server.app.use(expressLogging(logops));
-    server.app.use(serveStatic(path.join(__dirname, '/www/index.html')));
+    server.app.use(serveStatic('www'));
 
     server.http = httpLib.createServer(server.app);
 
