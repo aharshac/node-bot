@@ -2,8 +2,6 @@ const fs = require('fs');
 const os = require('os');
 const async = require('async');
 
-const motors = require('./motors');
-
 
 const rpi = {
 	isRaspberryPi: false,	// Check once if RPi
@@ -13,6 +11,13 @@ const rpi = {
 	gpio_loaded: false,	// GPIO setup complete?
 
 	os_release_file: "/etc/os-release",	// RPi Raspbian release info
+
+	pins: {
+    leftForward: 7,
+    leftReverse: 11,
+    rightForward: 13,
+    rightReverse: 15
+  },
 
 	isRpi: function () {
 		return this.isRaspberryPi;
@@ -55,16 +60,16 @@ const rpi = {
 	    async.parallel(
 				[
 		      function(callback) {
-		        rpi.GPIO.setup(motors.pins.leftForward, rpi.GPIO.DIR_OUT, callback);    // leftForward
+		        rpi.GPIO.setup(rpi.pins.leftForward, rpi.GPIO.DIR_OUT, callback);    // leftForward
 		      },
 		      function(callback) {
-		        rpi.GPIO.setup(motors.pins.leftReverse, rpi.GPIO.DIR_OUT, callback);    // leftReverse
+		        rpi.GPIO.setup(rpi.pins.leftReverse, rpi.GPIO.DIR_OUT, callback);    // leftReverse
 		      },
 					function(callback) {
-		        rpi.GPIO.setup(motors.pins.rightForward, rpi.GPIO.DIR_OUT, callback);    // rightForward
+		        rpi.GPIO.setup(rpi.pins.rightForward, rpi.GPIO.DIR_OUT, callback);    // rightForward
 		      },
 		      function(callback) {
-		        rpi.GPIO.setup(motors.pins.rightReverse, rpi.GPIO.DIR_OUT, callback);    // rightReverse
+		        rpi.GPIO.setup(rpi.pins.rightReverse, rpi.GPIO.DIR_OUT, callback);    // rightReverse
 		      },
 		    ],
 				function(err, results) {
@@ -86,7 +91,6 @@ const rpi = {
 	  } else {
 	    callback(true, null);
 	  }
-		//callback(false, 1);
 	},
 
 	pinHigh: function(pin, callback) {

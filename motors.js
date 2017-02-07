@@ -4,32 +4,13 @@ const rpi = require('./rpi');
 
 
 const motors = {
-  pins: {
-    leftForward: 7,
-    leftReverse: 11,
-    rightForward: 13,
-    rightReverse: 15
-  },
-
   goForward: function() {
     async.parallel([
       function(callback) {
-        JSON.stringify(rpi, null, 2);
-  			rpi.pinHigh(motors.pins.leftForward, callback);
+  			rpi.pinHigh(rpi.pins.leftForward, callback);
   		},
       function(callback) {
-  			rpi.pinHigh(motors.pins.rightForward, callback);
-  		}
-    ]);
-  },
-
-  goForward: function() {
-    async.parallel([
-      function(callback) {
-  			rpi.pinHigh(motors.pins.leftForward, callback);
-  		},
-      function(callback) {
-  			rpi.pinHigh(motors.pins.rightForward, callback);
+  			rpi.pinHigh(rpi.pins.rightForward, callback);
   		}
     ]);
   },
@@ -37,10 +18,10 @@ const motors = {
   goReverse: function() {
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(motors.pins.leftReverse, true, callback);
+  			rpi.pinOut(rpi.pins.leftReverse, true, callback);
   		},
       function(callback) {
-  			rpi.pinOut(motors.pins.rightReverse, true, callback);
+  			rpi.pinOut(rpi.pins.rightReverse, true, callback);
   		}
     ]);
   },
@@ -48,10 +29,10 @@ const motors = {
   turnLeft: function() {
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(motors.pins.leftReverse, true, callback);
+  			rpi.pinOut(rpi.pins.leftReverse, true, callback);
   		},
     	function(callback) {
-  			rpi.pinOut(motors.pins.rightForward, true, callback);
+  			rpi.pinOut(rpi.pins.rightForward, true, callback);
   		}
   	]);
   },
@@ -59,10 +40,10 @@ const motors = {
   turnRight: function() {
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(motors.pins.rightReverse, true, callback);
+  			rpi.pinOut(rpi.pins.rightReverse, true, callback);
   		},
       function(callback) {
-  			rpi.pinOut(motors.pins.leftForward, true, callback);
+  			rpi.pinOut(rpi.pins.leftForward, true, callback);
   		}
     ]);
   },
@@ -70,20 +51,19 @@ const motors = {
   stop: function() {
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(motors.pins.leftForward, false, callback);
+  			rpi.pinOut(rpi.pins.leftForward, false, callback);
   		},
   		function(callback) {
-      	rpi.pinOut(motors.pins.rightForward, false, callback);
+      	rpi.pinOut(rpi.pins.rightForward, false, callback);
   		},
   		function(callback) {
-  			rpi.pinOut(motors.pins.rightReverse, false, callback);
+  			rpi.pinOut(rpi.pins.rightReverse, false, callback);
   		},
       function(callback) {
-  			rpi.pinOut(motors.pins.leftReverse, false, callback);
+  			rpi.pinOut(rpi.pins.leftReverse, false, callback);
   		}
     ]);
   }
 };
-
 
 module.exports = motors;
