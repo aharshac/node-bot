@@ -81,7 +81,7 @@ const rpi = {
 	},
 
 	pinOut: function(pin, value, callback) {
-	  if(this.isRpi() && rpi.GPIO != null && this.gpio_loaded) {
+	  if(rpi.isRpi() && rpi.GPIO != null && rpi.gpio_loaded) {
 	    rpi.GPIO.write(pin, value, callback);
 	  } else {
 	    callback(true, null);
