@@ -20,23 +20,23 @@ const rpi = {
   },
 
 	isRpi: function () {
-		return this.isRaspberryPi;
+		return rpi.isRaspberryPi;
 	},
 
 	getGpio: function () {
-		return this.GPIO;
+		return rpi.GPIO;
 	},
 
 	// Check if Pi
 	init: function(onInit) {
-		if(os.platform().toLowerCase() == 'linux' && fs.existsSync(this.os_release_file)){
-			var data = fs.readFileSync(this.os_release_file).toString().toLowerCase();
-			this.isRaspberryPi = (data.indexOf("raspbian") > 0);
+		if(os.platform().toLowerCase() == 'linux' && fs.existsSync(rpi.os_release_file)){
+			var data = fs.readFileSync(rpi.os_release_file).toString().toLowerCase();
+			rpi.isRaspberryPi = (data.indexOf("raspbian") > 0);
 		}
 
-		console.log("Raspberry Pi Check : " + this.isRpi());
+		console.log("Raspberry Pi Check : " + rpi.isRpi());
 
-		if (!this.isRpi()) {
+		if (!rpi.isRpi()) {
 			if (onInit) {
 				onInit(true);	// error = true;
 			}
@@ -45,17 +45,17 @@ const rpi = {
 
 		try {
 	    const lib_rpiGpio = require('rpi-gpio');
-	    this.GPIO = lib_rpiGpio;
+	    rpi.GPIO = lib_rpiGpio;
 		} catch (ex) {
 			console.log("Could not initialize GPIO library.");
 			return;
 		}
-	  this.setupGpio(onInit);
+	  rpi.setupGpio(onInit);
 	},
 
 	// Initialize GPIO
 	setupGpio: function(onSetupComplete) {
-		if(this.isRpi() && this.GPIO != null){
+		if(rpi.isRpi() && rpi.GPIO != null){
 	    // Repeat for each GPIO pin
 	    async.parallel(
 				[
@@ -73,7 +73,7 @@ const rpi = {
 		      },
 		    ],
 				function(err, results) {
-		      this.gpio_loaded = !err;
+		      rpi.gpio_loaded = !err;
 		      if (err) {
 		        console.log("RPi GPIO setup error " + err);
 					}
@@ -94,11 +94,11 @@ const rpi = {
 	},
 
 	pinHigh: function(pin, callback) {
-		this.pinOut(pin, true, callback);
+		rpi.pinOut(pin, true, callback);
 	},
 
 	pinLow: function(pin, callback) {
-		this.pinOut(pin, false, callback);
+		rpi.pinOut(pin, false, callback);
 	}
 };
 
