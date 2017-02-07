@@ -1,7 +1,7 @@
 const express = require('express');
 const compression = require('compression');
 const serveStatic = require('serve-static');
-//const httpLib = require('http');
+const httpLib = require('http');
 const socketLib = require('socket.io');
 const path = require('path');
 
@@ -23,13 +23,13 @@ const server = {
     server.app.use(compression());
     server.app.use(serveStatic(path.join(__dirname, '/www/index.html')));
 
-    server.io = socketLib(server.app);
+    server.http = httpLib.createServer(server.app);
 
+    server.io = socketLib(server.app);
     io.sockets.on('connection', server.handleSocketConnection);
 
     try {
-      //server.http = httpLib.createServer(server.app);
-      server.app.listen(server.port, function() {
+      server.http.listen(server.port, function() {
         onInit(false, server.port);
       });
     } catch (error) {
