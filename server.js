@@ -25,8 +25,8 @@ const server = {
 
     server.http = httpLib.createServer(server.app);
 
-    server.io = socketLib(server.app);
-    io.sockets.on('connection', server.handleSocketConnection);
+    server.io = socketLib(server.http);
+    server.io.sockets.on('connection', server.handleSocketConnection);
 
     try {
       server.http.listen(server.port, function() {
