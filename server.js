@@ -21,7 +21,7 @@ const server = {
 
     server.app.set('port', server.port);
     server.app.use(compression());
-    server.app.use(serveStatic(path.join(__dirname, '/www/index.html'));
+    server.app.use(serveStatic(path.join(__dirname, '/www/index.html')));
 
     server.io = socketLib(server.app);
 
