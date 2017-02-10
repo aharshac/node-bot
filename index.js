@@ -1,5 +1,5 @@
 const rpi = require('./rpi');
-//const motors = require('./motors');
+//const controller = require('./controller');
 const server = require('./server');
 
 function initServer() {

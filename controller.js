@@ -3,8 +3,8 @@ const async = require('async');
 const rpi = require('./rpi');
 
 
-const motors = {
-  goForward: function() {
+const controller = {
+  moveForward: function() {
     async.parallel([
       function(callback) {
   			rpi.pinHigh(rpi.pins.leftForward, callback);
@@ -15,7 +15,7 @@ const motors = {
     ]);
   },
 
-  goReverse: function() {
+  moveReverse: function() {
     async.parallel([
   		function(callback) {
   			rpi.pinOut(rpi.pins.leftReverse, true, callback);
@@ -26,7 +26,7 @@ const motors = {
     ]);
   },
 
-  turnLeft: function() {
+  moveLeft: function() {
     async.parallel([
   		function(callback) {
   			rpi.pinOut(rpi.pins.leftReverse, true, callback);
@@ -37,7 +37,7 @@ const motors = {
   	]);
   },
 
-  turnRight: function() {
+  moveRight: function() {
     async.parallel([
   		function(callback) {
   			rpi.pinOut(rpi.pins.rightReverse, true, callback);
@@ -66,4 +66,4 @@ const motors = {
   }
 };
 
-module.exports = motors;
+module.exports = controller;

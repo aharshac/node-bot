@@ -5,7 +5,7 @@ const httpLib = require('http');
 const socketLib = require('socket.io');
 const path = require('path');
 
-const motors = require('./motors');
+const controller = require('./controller');
 
 const server = {
 	app: null,	// Check once if RPi
@@ -40,23 +40,23 @@ const server = {
   handleSocketConnection: function(socket) {
     socket.on('move', function(direction) {
       switch(direction){
-       case 'up':
-          motors.goForward();
+       case 'forward':
+          controller.moveForward();
           break;
-        case 'down':
-          motors.goReverse();
+        case 'backward':
+          controller.moveReverse();
           break;
         case 'left':
-          motors.turnLeft();
+          controller.moveLeft();
           break;
         case 'right':
-          motors.turnRight();
+          controller.moveRight();
           break;
       }
     });
     //listen for stop signal
     socket.on('stop', function(dir){
-      motors.stop();
+      controller.stop();
     });
   }
 };

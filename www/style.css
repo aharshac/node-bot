@@ -20,17 +20,17 @@ body {
 
 .btn {
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 50;
+  height: 50;
   background: #222;
   border-radius: 5px;
   color: #aaa;
   text-align: center;
   position: absolute;
-  box-shadow: 
-    inset 0 0 50px #333, 
-    0 4px 0 black, 
-    0 2px 0 #222, 
+  box-shadow:
+    inset 0 0 50px #333,
+    0 4px 0 black,
+    0 2px 0 #222,
     0 2px 3px #333;
   text-shadow: 0 -1px 0 black;
   font: normal 30px/100px helvetica, arial, sans-serif;

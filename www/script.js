@@ -10,6 +10,27 @@ $(function () {
     activeClass = 'is-active',
     isPressed = false;
 
+  function botMove(action) {
+    switch(action){
+      case 'forward':
+        socket.emit('move', 'forward');
+        ui.up.addClass(activeClass);
+        break;
+      case 'backward':
+        socket.emit('move', 'backward');
+        ui.down.addClass(activeClass);
+        break;
+      case 'left':
+        socket.emit('move', 'left');
+        ui.left.addClass(activeClass);
+        break;
+      case 'right':
+        socket.emit('move', 'right');
+        ui.right.addClass(activeClass);
+        break;
+    }
+  }
+
   //listen for key presses
   $(document).keydown(function(e){
     //don't do anything if there's already a key pressed
@@ -18,24 +39,20 @@ $(function () {
     isPressed = true;
     switch(e.which){
       case 87:
-        socket.emit('move', 'up');
-        ui.up.addClass(activeClass);
-        break;
-      case 65:
-        socket.emit('move', 'left');
-        ui.left.addClass(activeClass);
+        botMove('forward');
         break;
       case 83:
-        socket.emit('move', 'down');
-        ui.down.addClass(activeClass);
+        botMove('backward');
+        break;
+      case 65:
+        botMove('left');
         break;
       case 68:
-        socket.emit('move', 'right');
-        ui.right.addClass(activeClass);
+        botMove('right');
         break;
     }
   });
-  
+
   //stop all motors when any key is released
   $(document).keyup(function(e){
     ui.all.removeClass(activeClass);
@@ -43,4 +60,3 @@ $(function () {
     isPressed = false;
   });
 });
-
