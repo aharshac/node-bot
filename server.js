@@ -51,7 +51,7 @@ const server = {
        case 'forward':
           controller.moveForward();
           break;
-        case 'backward':
+        case 'reverse':
           controller.moveReverse();
           break;
         case 'left':
