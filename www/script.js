@@ -18,8 +18,8 @@ $( document ).ready(function () {
   };
   var activeClass = 'is-active';
   var isPressed = false;
-  //var streamUrl = "http://" + document.location.hostname + "/?action=stream";
-  var streamUrl = "http://192.168.1.51:9000/?action=stream";
+  var streamUrl = "http://" + document.location.hostname + "/?action=stream";
+  //var streamUrl = "http://192.168.1.51:9000/?action=stream";
 
   /* Initialise socket.io */
   try {
