@@ -1,6 +1,7 @@
 const express = require('express');
 const compression = require('compression');
 const serveStatic = require('serve-static');
+const basicAuth = require('express-basic-auth');
 const httpLib = require('http');
 const socketLib = require('socket.io');
 const path = require('path');
@@ -21,7 +22,14 @@ const server = {
 
     server.app.set('port', server.port);
     server.app.use(compression());
-    server.app.use(serveStatic('www'));
+		server.app.use(basicAuth({
+		  users: { 'user': 'collaborizm' },
+		  challenge: true,
+		  unauthorizedResponse: function(req) {
+		    return req.auth ? 'Wrong username or password.'  : 'No credentials provided';
+		  }
+		}));
+		server.app.use(serveStatic('www'));
 
     server.http = httpLib.createServer(server.app);
 

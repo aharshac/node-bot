@@ -1,17 +1,70 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>Node Bot</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" sizes="32x32" type="image/png" href="/favicon.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script type="text/javascript" src="/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/jquery.mobile.custom.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/script.js"></script>
   </head>
+
   <body>
-    <div class="wrapper">
-      <a class="btn btn-up">W</a>
-      <a class="btn btn-left">A</a>
-      <a class="btn btn-down">S</a>
-      <a class="btn btn-right">D</a>
+    <div class="header">
+      <a href="https://www.collaborizm.com/project/r1dE09adg" target="_blank"><img src="/collaborizm.png" alt="C"></a>
+      <h1>Node Bot</h1>
+      <a href="https://github.com/aharshac/node-bot" target="_blank"><img src="/github.png" alt="C"></a>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 col-sm-push-3 container-stream" id="container-stream">
+          <div alt="Sreaming error." class="stream stream-loading"></div>
+        </div>
+
+        <div class="col-sm-3 col-sm-pull-6 col-control">
+          <h3>Movement</h3>
+          <table class="centered">
+            <tr>
+              <th class="row-th"> </th>
+              <th class="row-th"> <a class="button" name="move" id="forward"> W </a>  </th>
+              <th class="row-th"> </th>
+            </tr>
+            <tr>
+              <td> <a class="button" name="move" id="left"> A </a> </td>
+              <td> <a class="button" name="move" id="reverse"> S </a> </td>
+              <td> <a class="button" name="move" id="right"> D </a> </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="col-sm-3 col-control">
+          <h3>Camera</h3>
+          <table class="centered">
+            <tr>
+              <th class="row-th"> </th>
+              <th class="row-th"> <a class="button" name="camera" id="up"> 8 </a>  </th>
+              <th class="row-th"> </th>
+            </tr>
+            <tr>
+              <td class="row-th"> <a class="button" name="camera" id="left"> 4</a> </td>
+              <td class="row-th"> <a class="button" name="camera" id="center"> 5 </a> </td>
+              <td class="row-th"> <a class="button" name="camera" id="right"> 6 </a> </td>
+            </tr>
+            <tr>
+              <th> </th>
+              <th> <a class="button" name="camera" id="down"> 2 </a>  </th>
+              <th> </th>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </body>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-  <script type="text/javascript" src="/script.js"></script>
 </html>
