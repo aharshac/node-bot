@@ -31,11 +31,12 @@ $( document ).ready(function () {
   }
 
   if (socket) {
-    socket.on('connection', handleSocketConnection);
+    io.on('connection', handleSocketConnection);
   }
 
   function handleSocketConnection(socket) {
 		socket.on('aux', function(data) {
+      console.log(data);
       if (!data.id) return;
 
       var id = data.id;
