@@ -4,10 +4,11 @@ const rpi = require('./rpi');
 
 
 const controller = {
-  var motorsTimeoutId = 0;
-  var headLightTimeoutId = 0;
+  motorsTimeoutId: 0,
 
-  var headLightOn = false;
+  headLightTimeoutId: 0,
+
+  headLightOn: false,
 
   startMotorsTimer: function() {
     controller.stopMotorsTimer();
