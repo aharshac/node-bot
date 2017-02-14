@@ -31,13 +31,12 @@ $( document ).ready(function () {
   }
 
   if (socket) {
-    socket.on('connection', handleSocketConnection);
+    handleSocketConnection();
   }
 
-  function handleSocketConnection(socket) {
+  function handleSocketConnection() {
 		socket.on('aux', function(data) {
-      console.log(data);
-      if (!data.id) return;
+      if (!data.id || data.value == null) return;
 
       var id = data.id;
       var value = data.value;
@@ -74,7 +73,7 @@ $( document ).ready(function () {
   function setActiveState(element, value) {
     if (!value) {
       element.removeClass(activeClass);
-  	} else if (!element.hasClass(activeClass)) {
+  	} else {
       element.addClass(activeClass);
     }
   }

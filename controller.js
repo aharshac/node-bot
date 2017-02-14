@@ -25,7 +25,7 @@ const controller = {
     controller.stopHeadLightTimer();
     controller.headLightTimeoutId = setTimeout(function() {
       controller.headLightOn = false;
-      rpi.pinOut(rpi.pins.headLight, controller.headLightOn, callback);
+      rpi.pinOut(rpi.pins.headLight, controller.headLightOn, null);
       controller.stopHeadLightTimer();
       if (callback) callback(controller.headLightOn);
     }, 5000);
