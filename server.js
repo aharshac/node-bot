@@ -46,9 +46,10 @@ const server = {
 	},
 
   handleSocketConnection: function(socket) {
+		/* move signals */
     socket.on('move', function(direction) {
       switch(direction){
-       case 'forward':
+       	case 'forward':
           controller.moveForward();
           break;
         case 'reverse':
@@ -62,9 +63,30 @@ const server = {
           break;
       }
     });
-    //listen for stop signal
-    socket.on('stop', function(dir){
-      controller.stop();
+
+		socket.on('aux', function(what) {
+      switch(what){
+       	case 'light':
+          controller.changeHeadLightState(function(headLightOn) {
+						var data = {
+							id: 'light',
+							value: headLightOn
+						};
+						socket.emit('aux', data);
+					});
+          break;
+      }
+    });
+
+		/* stop signals */
+    socket.on('stop', function(what) {
+			switch(what) {
+       	case 'motors':
+          controller.stopMotors();
+          break;
+				default:
+					controller.stopMotors();
+      }
     });
   }
 };

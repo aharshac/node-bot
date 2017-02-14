@@ -4,6 +4,36 @@ const rpi = require('./rpi');
 
 
 const controller = {
+  var motorsTimeoutId = 0;
+  var headLightTimeoutId = 0;
+
+  var headLightOn = false;
+
+  startMotorsTimer: function() {
+    controller.stopMotorsTimer();
+    controller.motorsTimeoutId = setTimeout(function() {
+      controller.stopMotors();
+    }, 5000);
+  }
+
+  stopMotorsTimer: function() {
+    clearTimeout(controller.motorsTimeoutId);
+  }
+
+  startHeadLightTimer: function(callback) {
+    controller.stopHeadLightTimer();
+    controller.headLightTimeoutId = setTimeout(function() {
+      controller.headLightOn = false;
+      rpi.pinOut(rpi.pins.headLight, controller.headLightOn, callback);
+      controller.stopHeadLightTimer();
+      if (callback) callback(controller.headLightOn);
+    }, 60000);
+  }
+
+  stopHeadLightTimer: function() {
+    clearTimeout(controller.headLightTimeoutId);
+  }
+
   moveForward: function() {
     async.parallel([
       function(callback) {
@@ -12,57 +42,73 @@ const controller = {
       function(callback) {
   			rpi.pinHigh(rpi.pins.rightForward, callback);
   		}
-    ]);
+    ], function(err, results) {
+      controller.startMotorsTimer();
+    });
   },
 
   moveReverse: function() {
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(rpi.pins.leftReverse, true, callback);
+  			rpi.pinHigh(rpi.pins.leftReverse, callback);
   		},
       function(callback) {
-  			rpi.pinOut(rpi.pins.rightReverse, true, callback);
+  			rpi.pinHigh(rpi.pins.rightReverse, callback);
   		}
-    ]);
+    ], function(err, results) {
+      controller.startMotorsTimer();
+    });
   },
 
   moveLeft: function() {
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(rpi.pins.leftReverse, true, callback);
+  			rpi.pinHigh(rpi.pins.leftReverse, callback);
   		},
     	function(callback) {
-  			rpi.pinOut(rpi.pins.rightForward, true, callback);
+  			rpi.pinHigh(rpi.pins.rightForward, callback);
   		}
-  	]);
+  	], function(err, results) {
+      controller.startMotorsTimer();
+    });
   },
 
   moveRight: function() {
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(rpi.pins.rightReverse, true, callback);
+  			rpi.pinHigh(rpi.pins.rightReverse, callback);
   		},
       function(callback) {
-  			rpi.pinOut(rpi.pins.leftForward, true, callback);
+  			rpi.pinHigh(rpi.pins.leftForward, callback);
   		}
-    ]);
+    ], function(err, results) {
+      controller.startMotorsTimer();
+    });
   },
 
-  stop: function() {
+  stopMotors: function() {
+    controller.stopMotorsTimer();
     async.parallel([
   		function(callback) {
-  			rpi.pinOut(rpi.pins.leftForward, false, callback);
+  			rpi.pinLow(rpi.pins.leftForward, callback);
   		},
   		function(callback) {
-      	rpi.pinOut(rpi.pins.rightForward, false, callback);
+      	rpi.pinLow(rpi.pins.rightForward, callback);
   		},
   		function(callback) {
-  			rpi.pinOut(rpi.pins.rightReverse, false, callback);
+  			rpi.pinLow(rpi.pins.rightReverse, callback);
   		},
       function(callback) {
-  			rpi.pinOut(rpi.pins.leftReverse, false, callback);
+  			rpi.pinLow(rpi.pins.leftReverse, callback);
   		}
     ]);
+  }
+
+  changeHeadLightState: function(callback) {
+    controller.headLightOn = !controller.headLightOn();
+    controller.startHeadLightTimer(callback);
+    rpi.pinOut(rpi.pins.headLight, controller.headLightOn, callback);
+    if (callback) callback(controller.headLightOn);
   }
 };
 

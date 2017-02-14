@@ -12,6 +12,8 @@ $( document ).ready(function () {
     cameraDown: $('#down[name="camera"]'),
     cameraRight: $('#right[name="camera"]'),
 
+    headLight: $('#light[name="aux"]'),
+
     allButtons: $('.button'),
 
     containerStream: $('#container-stream')
@@ -28,6 +30,35 @@ $( document ).ready(function () {
     socket = null;
   }
 
+  if (socket) {
+
+  }
+
+  function handleSocketConnection(socket) {
+		socket.on('aux', function(data) {
+      if (!data.id) return;
+
+      var id = data.id;
+      var value = data.value;
+      switch(id){
+       	case 'light':
+          setActiveState(ui.headLight, value);
+          break;
+      }
+    });
+
+		/* stop signals */
+    socket.on('stop', function(what) {
+			switch(what) {
+       	case 'motors':
+          controller.stopMotors();
+          break;
+				default:
+					controller.stopMotors();
+      }
+    });
+  }
+
   function socketSend(action) {
     if (socket && action) {
       socket.emit(action);
@@ -39,6 +70,27 @@ $( document ).ready(function () {
       socket.emit(action, data);
     }
   }
+
+
+
+  function toggleActiveState(element) {
+    if (element.hasClass(activeClass) ) {
+      element.removeClass(activeClass);
+  	} else {
+      element.addClass(activeClass);
+    }
+  }
+
+  function setActiveState(element, value) {
+    if (!value) {
+      element.removeClass(activeClass);
+  	} else if (!element.hasClass(activeClass)) {
+      element.addClass(activeClass);
+    }
+  }
+
+
+
 
   function botMove(action) {
     switch(action){
@@ -86,7 +138,18 @@ $( document ).ready(function () {
     }
   }
 
-  //  Listener for key presses
+  function changeAuxState(action) {
+    switch(action){
+      case 'light':
+        socketSendData('aux', 'light');
+        toggleActiveState(ui.headLight);
+        break;
+    }
+  }
+
+
+
+  /* Handle keyboard presses */
   $(document).keydown(function(e){
     if(isPressed) return;
 
@@ -122,16 +185,38 @@ $( document ).ready(function () {
       case 54: case 102: // 6
         cameraMove('right');
         break;
+
+      /* Headlight */
+      case 48: case 96: // 0
+        changeAuxState('light');
+        break;
     }
   });
 
   $(document).keyup(function(e){
     ui.allButtons.removeClass(activeClass);
-    socketSend('stop');
+    socketSendData('stop', 'motors');
     isPressed = false;
   });
 
-  $('.button').on("mousedown vmousedown", function(e) {
+
+
+  /* Handle mouse click for toggle switches */
+  $('.switch').on("vmouseup", function(e) {
+    var target = e.target;
+
+    if (target && $(target).attr('name') && $(target).attr('id')) {
+      var name = $(target).attr('name');
+      var id = $(target).attr('id');
+
+      if (name === 'aux') {
+        changeAuxState(id);
+      }
+    }
+  });
+
+  /* Handle mouse click for push buttons */
+  $('.button').on("vmousedown", function(e) {
     if(isPressed) return;
 
     isPressed = true;
@@ -149,12 +234,16 @@ $( document ).ready(function () {
     }
   });
 
-  $('.button').on("mouseup vmouseup", function() {
+  $('.button').on("vmouseup", function() {
     ui.allButtons.removeClass(activeClass);
-    socketSend('stop');
+    socketSendData('stop', 'motors');
     isPressed = false;
   });
 
+
+
+
+  /* Load video feed after some time after load, purely aesthetic */
   setTimeout(function(){
     ui.containerStream.html('<img src="' + streamUrl + '" alt="Sreaming error." class="stream" id="stream">');
     $('#stream').error(function() {

@@ -16,7 +16,8 @@ const rpi = {
     leftForward: 7,
     leftReverse: 11,
     rightForward: 13,
-    rightReverse: 15
+    rightReverse: 15,
+		headLight: 8
   },
 
 	isRpi: function () {
@@ -70,6 +71,9 @@ const rpi = {
 		      },
 		      function(callback) {
 		        rpi.GPIO.setup(rpi.pins.rightReverse, rpi.GPIO.DIR_OUT, callback);    // rightReverse
+		      },
+					function(callback) {
+		        rpi.GPIO.setup(rpi.pins.headLight, rpi.GPIO.DIR_OUT, callback);    // headLight
 		      },
 		    ],
 				function(err, results) {
