@@ -15,11 +15,11 @@ const controller = {
     controller.motorsTimeoutId = setTimeout(function() {
       controller.stopMotors();
     }, 5000);
-  }
+  },
 
   stopMotorsTimer: function() {
     clearTimeout(controller.motorsTimeoutId);
-  }
+  },
 
   startHeadLightTimer: function(callback) {
     controller.stopHeadLightTimer();
@@ -29,11 +29,11 @@ const controller = {
       controller.stopHeadLightTimer();
       if (callback) callback(controller.headLightOn);
     }, 60000);
-  }
+  },
 
   stopHeadLightTimer: function() {
     clearTimeout(controller.headLightTimeoutId);
-  }
+  },
 
   moveForward: function() {
     async.parallel([
@@ -103,7 +103,7 @@ const controller = {
   			rpi.pinLow(rpi.pins.leftReverse, callback);
   		}
     ]);
-  }
+  },
 
   changeHeadLightState: function(callback) {
     controller.headLightOn = !controller.headLightOn();
