@@ -28,7 +28,7 @@ const controller = {
       rpi.pinOut(rpi.pins.headLight, controller.headLightOn, callback);
       controller.stopHeadLightTimer();
       if (callback) callback(controller.headLightOn);
-    }, 60000);
+    }, 5000);
   },
 
   stopHeadLightTimer: function() {

@@ -31,7 +31,7 @@ $( document ).ready(function () {
   }
 
   if (socket) {
-
+    socket.on('connection', handleSocketConnection);
   }
 
   function handleSocketConnection(socket) {
