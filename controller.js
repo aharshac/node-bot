@@ -106,7 +106,7 @@ const controller = {
   },
 
   changeHeadLightState: function(callback) {
-    controller.headLightOn = !controller.headLightOn();
+    controller.headLightOn = !controller.headLightOn;
     controller.startHeadLightTimer(callback);
     rpi.pinOut(rpi.pins.headLight, controller.headLightOn, callback);
     if (callback) callback(controller.headLightOn);
