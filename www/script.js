@@ -31,7 +31,7 @@ $( document ).ready(function () {
   }
 
   if (socket) {
-    io.on('connection', handleSocketConnection);
+    socket.on('connection', handleSocketConnection);
   }
 
   function handleSocketConnection(socket) {
@@ -45,17 +45,6 @@ $( document ).ready(function () {
        	case 'light':
           setActiveState(ui.headLight, value);
           break;
-      }
-    });
-
-		/* stop signals */
-    socket.on('stop', function(what) {
-			switch(what) {
-       	case 'motors':
-          controller.stopMotors();
-          break;
-				default:
-					controller.stopMotors();
       }
     });
   }
