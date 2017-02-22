@@ -8,26 +8,27 @@ const rpi = {
 
 	GPIO: null,	// GPIO object
 
-	gpio_loaded: false,	// GPIO setup complete?
-
 	os_release_file: "/etc/os-release",	// RPi Raspbian release info
 
-	pins: {
-    leftForward: 7,
-    leftReverse: 11,
-    rightForward: 13,
-    rightReverse: 15,
-		headLight: 8
+	pinNum: {
+    leftForward: "P1-7",
+    leftReverse: "P1-11",
+    rightForward: "P1-13",
+    rightReverse: "P1-15",
+		headLight: "P1-8",
   },
+
+	pins: {
+		leftForward: null,
+    leftReverse: null,
+    rightForward: null,
+    rightReverse: null,
+		headLight: null,
+	},
 
 	isRpi: function () {
 		return rpi.isRaspberryPi;
 	},
-
-	getGpio: function () {
-		return rpi.GPIO;
-	},
-
 	// Check if Pi
 	init: function(onInit) {
 		if(os.platform().toLowerCase() == 'linux' && fs.existsSync(rpi.os_release_file)){
@@ -39,57 +40,43 @@ const rpi = {
 
 		if (!rpi.isRpi()) {
 			if (onInit) {
-				onInit(true);	// error = true;
+				onInit("Not Pi");	// error = true;
 			}
 			return;
 		}
 
 		try {
-	    const lib_rpio = require('rpio');
-	    rpi.GPIO = lib_rpio;
+			const five = require("johnny-five");
+			rpi.GPIO = five;
+
+			const Raspi = require("raspi-io");
+			const board = new five.Board({
+			  io: new Raspi()
+			});
+
+			board.on("ready", function() {
+				try {
+					rpi.pins.leftForward = new five.Pin({ pin: rpi.pinNum.leftForward, type: "digital" });
+					rpi.pins.leftReverse = new five.Pin({ pin: rpi.pinNum.leftReverse, type: "digital" });
+					rpi.pins.rightForward = new five.Pin({ pin: rpi.pinNum.rightForward, type: "digital" });
+					rpi.pins.rightReverse = new five.Pin({ pin: rpi.pinNum.rightReverse, type: "digital" });
+					rpi.pins.headLight = new five.Pin({ pin: rpi.pinNum.headLight, type: "digital" });
+					onInit(false);
+				} catch (e) {
+					onInit("RPi GPIO setup error " + e);
+				}
+			});
 		} catch (ex) {
-			console.log("Could not initialize GPIO library.");
-			return;
-		}
-	  rpi.setupGpio(onInit);
-	},
-
-	// Initialize GPIO
-	setupGpio: function(onSetupComplete) {
-		if (rpi.isRpi() && rpi.GPIO != null) {
-			try {
-				var rpio = rpi.GPIO;
-				rpio.init({gpiomem: false, mapping: 'physical'});
-				rpio.open(rpi.pins.leftForward, rpio.OUTPUT, rpio.LOW);
-				rpio.open(rpi.pins.leftReverse, rpio.OUTPUT, rpio.LOW);
-				rpio.open(rpi.pins.rightForward, rpio.OUTPUT, rpio.LOW);
-				rpio.open(rpi.pins.rightReverse, rpio.OUTPUT, rpio.LOW);
-				rpio.open(rpi.pins.headLight, rpio.OUTPUT, rpio.LOW);
-				rpi.gpio_loaded = true;
-				onSetupComplete(false);
-			} catch (e) {
-				console.log("RPi GPIO setup error " + e);
-				onSetupComplete(e);
-			}
-		}
-	},
-
-	pinOut: function(pin, value) {
-		try {
-			if(rpi.isRpi() && rpi.GPIO != null && rpi.gpio_loaded) {
-				rpi.GPIO.write(pin, value);
-		  }
-		} catch (e) {
-			console.log("RPi GPIO pinOut error " + e);
+			onInit("Could not initialize GPIO library.");
 		}
 	},
 
 	pinHigh: function(pin) {
-		rpi.pinOut(pin, rpi.GPIO.HIGH);
+		if (pin) pin.high();
 	},
 
 	pinLow: function(pin, callback) {
-		rpi.pinOut(pin, rpi.GPIO.LOW);
+		if (pin) pin.low();
 	}
 };
 
