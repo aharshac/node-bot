@@ -25,7 +25,7 @@ const controller = {
     controller.stopHeadLightTimer();
     controller.headLightTimeoutId = setTimeout(function() {
       controller.headLightOn = false;
-      rpi.pinOut(rpi.pins.headLight, controller.headLightOn, null);
+      rpi.pinOut(rpi.pins.headLight, controller.headLightOn);
       controller.stopHeadLightTimer();
       if (callback) callback(controller.headLightOn);
     }, 30000);
@@ -36,79 +36,65 @@ const controller = {
   },
 
   moveForward: function() {
-    async.parallel([
-      function(callback) {
-  			rpi.pinHigh(rpi.pins.leftForward, callback);
-  		},
-      function(callback) {
-  			rpi.pinHigh(rpi.pins.rightForward, callback);
-  		}
-    ], function(err, results) {
+    try {
+      rpi.pinHigh(rpi.pins.leftForward);
+      rpi.pinHigh(rpi.pins.rightForward);
+    } catch (e) {
+      console.log("RPi GPIO moveForward error " + e);
+    } finally {
       controller.startMotorsTimer();
-    });
+    }
   },
 
   moveReverse: function() {
-    async.parallel([
-  		function(callback) {
-  			rpi.pinHigh(rpi.pins.leftReverse, callback);
-  		},
-      function(callback) {
-  			rpi.pinHigh(rpi.pins.rightReverse, callback);
-  		}
-    ], function(err, results) {
+    try {
+      rpi.pinHigh(rpi.pins.leftReverse);
+      rpi.pinHigh(rpi.pins.rightReverse);
+    } catch (e) {
+      console.log("RPi GPIO moveReverse error " + e);
+    } finally {
       controller.startMotorsTimer();
-    });
+    }
   },
 
   moveLeft: function() {
-    async.parallel([
-  		function(callback) {
-  			rpi.pinHigh(rpi.pins.leftReverse, callback);
-  		},
-    	function(callback) {
-  			rpi.pinHigh(rpi.pins.rightForward, callback);
-  		}
-  	], function(err, results) {
+    try {
+      rpi.pinHigh(rpi.pins.leftReverse);
+      rpi.pinHigh(rpi.pins.rightForward);
+    } catch (e) {
+      console.log("RPi GPIO moveLeft error " + e);
+    } finally {
       controller.startMotorsTimer();
-    });
+    }
   },
 
   moveRight: function() {
-    async.parallel([
-  		function(callback) {
-  			rpi.pinHigh(rpi.pins.rightReverse, callback);
-  		},
-      function(callback) {
-  			rpi.pinHigh(rpi.pins.leftForward, callback);
-  		}
-    ], function(err, results) {
+    try {
+      rpi.pinHigh(rpi.pins.rightReverse);
+      rpi.pinHigh(rpi.pins.leftForward);
+    } catch (e) {
+      console.log("RPi GPIO moveRight error " + e);
+    } finally {
       controller.startMotorsTimer();
-    });
+    }
   },
 
   stopMotors: function() {
     controller.stopMotorsTimer();
-    async.parallel([
-  		function(callback) {
-  			rpi.pinLow(rpi.pins.leftForward, callback);
-  		},
-  		function(callback) {
-      	rpi.pinLow(rpi.pins.rightForward, callback);
-  		},
-  		function(callback) {
-  			rpi.pinLow(rpi.pins.rightReverse, callback);
-  		},
-      function(callback) {
-  			rpi.pinLow(rpi.pins.leftReverse, callback);
-  		}
-    ]);
+    try {
+      rpi.pinLow(rpi.pins.leftForward);
+      rpi.pinLow(rpi.pins.leftReverse);
+      rpi.pinLow(rpi.pins.rightForward);
+      rpi.pinLow(rpi.pins.rightReverse);
+    } catch (e) {
+      console.log("RPi GPIO stopMotors error " + e);
+    }
   },
 
   changeHeadLightState: function(callback) {
     controller.headLightOn = !controller.headLightOn;
     controller.startHeadLightTimer(callback);
-    rpi.pinOut(rpi.pins.headLight, controller.headLightOn, callback);
+    rpi.pinOut(rpi.pins.headLight, controller.headLightOn);
     if (callback) callback(controller.headLightOn);
   }
 };

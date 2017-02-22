@@ -45,8 +45,8 @@ const rpi = {
 		}
 
 		try {
-	    const lib_rpiGpio = require('rpi-gpio');
-	    rpi.GPIO = lib_rpiGpio;
+	    const lib_rpiGpio = require('rpio');
+	    rpi.GPIO = lib_rpio;
 		} catch (ex) {
 			console.log("Could not initialize GPIO library.");
 			return;
@@ -56,53 +56,40 @@ const rpi = {
 
 	// Initialize GPIO
 	setupGpio: function(onSetupComplete) {
-		if(rpi.isRpi() && rpi.GPIO != null){
-	    // Repeat for each GPIO pin
-	    async.parallel(
-				[
-		      function(callback) {
-		        rpi.GPIO.setup(rpi.pins.leftForward, rpi.GPIO.DIR_OUT, callback);    // leftForward
-		      },
-		      function(callback) {
-		        rpi.GPIO.setup(rpi.pins.leftReverse, rpi.GPIO.DIR_OUT, callback);    // leftReverse
-		      },
-					function(callback) {
-		        rpi.GPIO.setup(rpi.pins.rightForward, rpi.GPIO.DIR_OUT, callback);    // rightForward
-		      },
-		      function(callback) {
-		        rpi.GPIO.setup(rpi.pins.rightReverse, rpi.GPIO.DIR_OUT, callback);    // rightReverse
-		      },
-					function(callback) {
-		        rpi.GPIO.setup(rpi.pins.headLight, rpi.GPIO.DIR_OUT, callback);    // headLight
-		      },
-		    ],
-				function(err, results) {
-		      rpi.gpio_loaded = !err;
-		      if (err) {
-		        console.log("RPi GPIO setup error " + err);
-					}
-					if (onSetupComplete) {
-						onSetupComplete(err);
-					}
-		    }
-			);
+		if (rpi.isRpi() && rpi.GPIO != null) {
+			try {
+				var rpio = rpi.GPIO;
+				rpio.init({gpiomem: false, mapping: 'physical'});
+				rpio.open(rpi.pins.leftForward, rpio.OUTPUT, rpio.LOW);
+				rpio.open(rpi.pins.leftReverse, rpio.OUTPUT, rpio.LOW);
+				rpio.open(rpi.pins.rightForward, rpio.OUTPUT, rpio.LOW);
+				rpio.open(rpi.pins.rightReverse, rpio.OUTPUT, rpio.LOW);
+				rpio.open(rpi.pins.headLight, rpio.OUTPUT, rpio.LOW);
+				rpi.gpio_loaded = true;
+				onSetupComplete(false);
+			} catch (e) {
+				console.log("RPi GPIO setup error " + e);
+				onSetupComplete(e);
+			}
 		}
 	},
 
-	pinOut: function(pin, value, callback) {
-	  if(rpi.isRpi() && rpi.GPIO != null && rpi.gpio_loaded) {
-	    rpi.GPIO.write(pin, value, callback);
-	  } else {
-	    callback(true, null);
-	  }
+	pinOut: function(pin, value) {
+		try {
+			if(rpi.isRpi() && rpi.GPIO != null && rpi.gpio_loaded) {
+				rpi.GPIO.write(pin, value);
+		  }
+		} catch (e) {
+			console.log("RPi GPIO pinOut error " + e);
+		}
 	},
 
-	pinHigh: function(pin, callback) {
-		rpi.pinOut(pin, true, callback);
+	pinHigh: function(pin) {
+		rpi.pinOut(pin, rpi.GPIO.HIGH);
 	},
 
 	pinLow: function(pin, callback) {
-		rpi.pinOut(pin, false, callback);
+		rpi.pinOut(pin, rpi.GPIO.LOW);
 	}
 };
 
