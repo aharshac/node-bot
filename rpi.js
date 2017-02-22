@@ -45,7 +45,7 @@ const rpi = {
 		}
 
 		try {
-	    const lib_rpiGpio = require('rpio');
+	    const lib_rpio = require('rpio');
 	    rpi.GPIO = lib_rpio;
 		} catch (ex) {
 			console.log("Could not initialize GPIO library.");
