@@ -67,7 +67,7 @@ const rpi = {
 				}
 			});
 		} catch (ex) {
-			onInit("Could not initialize GPIO library.");
+			onInit("RPi GPIO setup error " + ex);
 		}
 	},
 
