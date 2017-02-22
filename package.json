@@ -31,6 +31,7 @@
     "express-basic-auth": "^0.2.3",
     "express-logging": "^1.1.1",
     "http": "0.0.0",
+    "johnny-five": "^0.10.6",
     "logops": "^1.0.7",
     "rpi-gpio": "^0.7.0",
     "rpio": "^0.9.15",
