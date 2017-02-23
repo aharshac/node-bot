@@ -31,7 +31,7 @@ const rpi = {
 	servos: {
 		cameraPan: null,
     cameraTilt: null,
-	}
+	},
 
 	isRpi: function () {
 		return rpi.isRaspberryPi;
