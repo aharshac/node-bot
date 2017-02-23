@@ -15,7 +15,7 @@ const rpi = {
     leftReverse: "P1-11",
     rightForward: "P1-13",
     rightReverse: "P1-15",
-		headLight: "P1-8",
+		headLight: "P1-16",
   },
 
 	pins: {
