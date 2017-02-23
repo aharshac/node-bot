@@ -16,6 +16,8 @@ const rpi = {
     rightForward: "P1-13",
     rightReverse: "P1-15",
 		headLight: "P1-16",
+		cameraPan: "P1-12",
+    cameraTilt: "P1-32",
   },
 
 	pins: {
@@ -25,6 +27,11 @@ const rpi = {
     rightReverse: null,
 		headLight: null,
 	},
+
+	servos: {
+		cameraPan: null,
+    cameraTilt: null,
+	}
 
 	isRpi: function () {
 		return rpi.isRaspberryPi;
@@ -51,7 +58,8 @@ const rpi = {
 
 			const Raspi = require("raspi-io");
 			const board = new five.Board({
-			  io: new Raspi()
+			  io: new Raspi(),
+				repl: false,
 			});
 
 			board.on("ready", function() {
@@ -61,6 +69,10 @@ const rpi = {
 					rpi.pins.rightForward = new five.Pin({ pin: rpi.pinNum.rightForward, type: "digital" });
 					rpi.pins.rightReverse = new five.Pin({ pin: rpi.pinNum.rightReverse, type: "digital" });
 					rpi.pins.headLight = new five.Pin({ pin: rpi.pinNum.headLight, type: "digital" });
+
+					rpi.servos.cameraPan = new five.Servo({ pin: rpi.pinNum.cameraPan, center: true });
+					rpi.servos.cameraTilt = new five.Servo({ pin: rpi.pinNum.cameraTilt, startAt: 120 });
+
 					onInit(false);
 				} catch (e) {
 					onInit("RPi GPIO setup error " + e);
