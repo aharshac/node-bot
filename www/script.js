@@ -80,7 +80,6 @@ $( document ).ready(function () {
 
 
 
-
   function botMove(action) {
     switch(action){
       case 'forward':
@@ -103,7 +102,7 @@ $( document ).ready(function () {
   }
 
   function cameraMove(action) {
-    switch(action){
+    switch(action) {
       case 'left':
         socketSendData('camera', 'left');
         ui.cameraLeft.addClass(activeClass);
@@ -184,7 +183,7 @@ $( document ).ready(function () {
 
   $(document).keyup(function(e){
     ui.allButtons.removeClass(activeClass);
-    socketSendData('stop', 'motors');
+    socketSendData('stop', 'all');
     isPressed = false;
   });
 
@@ -225,7 +224,7 @@ $( document ).ready(function () {
 
   $('.button').on("vmouseup", function() {
     ui.allButtons.removeClass(activeClass);
-    socketSendData('stop', 'motors');
+    socketSendData('stop', 'all');
     isPressed = false;
   });
 

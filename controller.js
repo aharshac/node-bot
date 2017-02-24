@@ -8,8 +8,11 @@ const controller = {
 
   headLightTimeoutId: 0,
 
+  servoTimeoutId: 0,
+
   headLightOn: false,
 
+  /* Timers */
   startMotorsTimer: function() {
     controller.stopMotorsTimer();
     controller.motorsTimeoutId = setTimeout(function() {
@@ -35,6 +38,18 @@ const controller = {
     clearTimeout(controller.headLightTimeoutId);
   },
 
+  startServosTimer: function() {
+    controller.stopServosTimer();
+    controller.servoTimeoutId = setTimeout(function() {
+      controller.stopServos();
+    }, 5000);
+  },
+
+  stopServosTimer: function() {
+    clearTimeout(controller.servoTimeoutId);
+  },
+
+  /* Motors */
   moveForward: function() {
     try {
       rpi.pinHigh(rpi.pins.leftForward);
@@ -91,6 +106,7 @@ const controller = {
     }
   },
 
+  /* Headlight */
   changeHeadLightState: function(callback) {
     controller.headLightOn = !controller.headLightOn;
     controller.startHeadLightTimer(callback);
@@ -100,7 +116,61 @@ const controller = {
       rpi.pinLow(rpi.pins.headLight);
     }
     if (callback) callback(controller.headLightOn);
+  },
+
+  /* Camera */
+  servoPanLeft: function() {
+    try {
+      var currentAngle = rpi.servos.cameraPan.position;
+      if (currentAngle + rpi.servoAngles.changePan >= rpi.servoAngles.maxPan){
+        currentAngle = rpi.servoAngles.maxPan;
+      } else {
+        currentAngle += rpi.servoAngles.changePan;
+      }
+      rpi.servos.cameraPan.to(currentAngle);
+    } catch (e) {
+      console.log("RPi GPIO servoPanLeft error " + e);
+    } finally {
+      controller.startServosTimer();
+    }
   }
+
+  servoPanRight: function() {
+    try {
+      var currentAngle = rpi.servos.cameraPan.position;
+      if (currentAngle - rpi.servoAngles.changePan <= rpi.servoAngles.minPan){
+        currentAngle = rpi.servoAngles.minPan;
+      } else {
+        currentAngle -= rpi.servoAngles.changePan;
+      }
+      rpi.servos.cameraPan.to(currentAngle);
+    } catch (e) {
+      console.log("RPi GPIO servoPanRight error " + e);
+    } finally {
+      controller.startServosTimer();
+    }
+  }
+
+  servosCenter: function() {
+    try {
+      rpi.servos.cameraPan.center();
+      rpi.servos.cameraTilt.center();
+    } catch (e) {
+      console.log("RPi GPIO servosCenter error " + e);
+    } finally {
+      controller.startServosTimer();
+    }
+  }
+
+  stopServos: function() {
+    controller.stopServosTimer();
+    try {
+      rpi.servos.cameraPan.stop();
+      rpi.servos.cameraTilt.stop();
+    } catch (e) {
+      console.log("RPi GPIO stopServos error " + e);
+    }
+  },
 };
 
 module.exports = controller;

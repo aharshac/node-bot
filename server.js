@@ -64,6 +64,26 @@ const server = {
       }
     });
 
+    socket.on('camera', function(direction) {
+			switch(direction) {
+	      case 'left':
+					controller.servoPanLeft();
+	        break;
+				case 'right':
+					controller.servoPanRight();
+	        break;
+				case 'center':
+					controller.servosCenter();
+	        break;
+	      case 'up':
+
+	        break;
+	      case 'down':
+
+	        break;
+	    }
+    });
+
 		socket.on('aux', function(what) {
       switch(what){
        	case 'light':
@@ -84,8 +104,12 @@ const server = {
        	case 'motors':
           controller.stopMotors();
           break;
+       	case 'servos':
+          controller.stopServos();
+          break;
 				default:
 					controller.stopMotors();
+					controller.stopServos();
       }
     });
   }

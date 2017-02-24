@@ -17,7 +17,7 @@ const rpi = {
     rightReverse: "P1-15",
 		headLight: "P1-16",
 		cameraPan: "P1-12",
-    cameraTilt: "P1-32",
+    cameraTilt: "P1-33",
   },
 
 	pins: {
@@ -32,6 +32,15 @@ const rpi = {
 		cameraPan: null,
     cameraTilt: null,
 	},
+
+	servoAngles: {
+		minPan: 0,
+		maxPan: 180,
+		changePan: 15,
+		minTilt: 0,
+		maxTilt: 180,
+		changeTilt: 15,
+	}
 
 	isRpi: function () {
 		return rpi.isRaspberryPi;
