@@ -183,7 +183,7 @@ $( document ).ready(function () {
 
   $(document).keyup(function(e){
     ui.allButtons.removeClass(activeClass);
-    socketSendData('stop', 'all');
+    socketSendData('stop', 'motors');
     isPressed = false;
   });
 
@@ -224,7 +224,7 @@ $( document ).ready(function () {
 
   $('.button').on("vmouseup", function() {
     ui.allButtons.removeClass(activeClass);
-    socketSendData('stop', 'all');
+    socketSendData('stop', 'motors');
     isPressed = false;
   });
 

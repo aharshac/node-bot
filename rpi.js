@@ -40,7 +40,7 @@ const rpi = {
 		minTilt: 0,
 		maxTilt: 180,
 		changeTilt: 15,
-	}
+	},
 
 	isRpi: function () {
 		return rpi.isRaspberryPi;

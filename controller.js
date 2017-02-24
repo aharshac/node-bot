@@ -17,7 +17,7 @@ const controller = {
     controller.stopMotorsTimer();
     controller.motorsTimeoutId = setTimeout(function() {
       controller.stopMotors();
-    }, 5000);
+    }, 3000);
   },
 
   stopMotorsTimer: function() {
@@ -133,7 +133,7 @@ const controller = {
     } finally {
       controller.startServosTimer();
     }
-  }
+  },
 
   servoPanRight: function() {
     try {
@@ -149,7 +149,7 @@ const controller = {
     } finally {
       controller.startServosTimer();
     }
-  }
+  },
 
   servosCenter: function() {
     try {
@@ -160,7 +160,7 @@ const controller = {
     } finally {
       controller.startServosTimer();
     }
-  }
+  },
 
   stopServos: function() {
     controller.stopServosTimer();
