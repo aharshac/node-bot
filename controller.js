@@ -151,6 +151,38 @@ const controller = {
     }
   },
 
+  servoTiltUp: function() {
+    try {
+      var currentAngle = rpi.servos.cameraTilt.position;
+      if (currentAngle + rpi.servoAngles.changeTilt >= rpi.servoAngles.maxTilt) {
+        currentAngle = rpi.servoAngles.maxTilt;
+      } else {
+        currentAngle += rpi.servoAngles.changeTilt;
+      }
+      rpi.servos.cameraTilt.to(currentAngle);
+    } catch (e) {
+      console.log("RPi GPIO servoTiltUp error " + e);
+    } finally {
+      controller.startServosTimer();
+    }
+  },
+
+  servoTiltDown: function() {
+    try {
+      var currentAngle = rpi.servos.cameraTilt.position;
+      if (currentAngle - rpi.servoAngles.changeTilt <= rpi.servoAngles.minTilt) {
+        currentAngle = rpi.servoAngles.minTilt;
+      } else {
+        currentAngle -= rpi.servoAngles.changeTilt;
+      }
+      rpi.servos.cameraTilt.to(currentAngle);
+    } catch (e) {
+      console.log("RPi GPIO servoTiltDown error " + e);
+    } finally {
+      controller.startServosTimer();
+    }
+  },
+
   servosCenter: function() {
     try {
       rpi.servos.cameraPan.center();

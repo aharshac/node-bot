@@ -76,10 +76,10 @@ const server = {
 					controller.servosCenter();
 	        break;
 	      case 'up':
-
+					controller.servoTiltUp();
 	        break;
 	      case 'down':
-
+					controller.servoTiltDown();
 	        break;
 	    }
     });
