@@ -151,7 +151,7 @@ const controller = {
     }
   },
 
-  servoTiltUp: function() {
+  servoTiltDown: function() {
     try {
       var currentAngle = rpi.servos.cameraTilt.position;
       if (currentAngle + rpi.servoAngles.changeTilt >= rpi.servoAngles.maxTilt) {
@@ -167,7 +167,7 @@ const controller = {
     }
   },
 
-  servoTiltDown: function() {
+  servoTiltUp: function() {
     try {
       var currentAngle = rpi.servos.cameraTilt.position;
       if (currentAngle - rpi.servoAngles.changeTilt <= rpi.servoAngles.minTilt) {
