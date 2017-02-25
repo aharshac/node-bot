@@ -42,7 +42,7 @@ const controller = {
     controller.stopServosTimer();
     controller.servoTimeoutId = setTimeout(function() {
       controller.stopServos();
-    }, 5000);
+    }, 1000);
   },
 
   stopServosTimer: function() {
