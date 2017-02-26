@@ -4,7 +4,7 @@
 
 Raspberry Pi on wheels, powered by **Node.js**.
 
-![Node Bot](/images/Node_Bot.jpg "Node Bot")
+![Node Bot](/Node_Bot.jpg "Node Bot")
 
 &nbsp;
 

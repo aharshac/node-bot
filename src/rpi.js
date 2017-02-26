@@ -1,6 +1,5 @@
 const fs = require('fs');
 const os = require('os');
-const async = require('async');
 
 
 const rpi = {

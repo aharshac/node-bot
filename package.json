@@ -4,9 +4,9 @@
   "description": "Raspberry Pi robot on wheels using Node.js",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "nodemon index.js",
-    "dev": "nodemon test-server.js"
+    "start": "node src/index.js",
+    "test": "nodemon src/index.js",
+    "dev": "nodemon src/test-server.js"
   },
   "repository": {
     "type": "git",
@@ -25,17 +25,12 @@
   },
   "homepage": "https://github.com/aharshac/node-bot#readme",
   "dependencies": {
-    "async": "^2.1.4",
     "compression": "^1.6.2",
     "express": "^4.14.1",
     "express-basic-auth": "^0.2.3",
-    "express-logging": "^1.1.1",
     "http": "0.0.0",
     "johnny-five": "^0.10.6",
-    "logops": "^1.0.7",
     "raspi-io": "^7.2.4",
-    "rpi-gpio": "^0.7.0",
-    "rpio": "^0.9.15",
     "serve-static": "^1.11.2",
     "socket.io": "^1.7.2"
   }

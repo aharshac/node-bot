@@ -1,5 +1,3 @@
-const async = require('async');
-
 const rpi = require('./rpi');
 
 
