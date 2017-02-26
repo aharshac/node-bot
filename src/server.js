@@ -29,7 +29,7 @@ const server = {
 		    return req.auth ? 'Wrong username or password.'  : 'No credentials provided';
 		  }
 		}));
-		server.app.use(serveStatic('www'));
+		server.app.use(serveStatic(path.join(__dirname,'www')));
 
     server.http = httpLib.createServer(server.app);
 
