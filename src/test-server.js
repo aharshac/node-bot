@@ -2,6 +2,7 @@ const express = require('express');
 const compression = require('compression');
 const basicAuth = require('express-basic-auth');
 const serveStatic = require('serve-static');
+const path = require('path');
 
 const oneHour = 3600000;
 
@@ -14,7 +15,7 @@ app.use(basicAuth({
     return req.auth ? 'Wrong username or password.'  : 'No credentials provided';
   }
 }));
-app.use(serveStatic('./www', {maxAge: 0}));
+app.use(serveStatic(path.join(__dirname,'www'), {maxAge: 0}));
 
 app.listen(process.env.PORT || 8000, () => {
   console.log('Server started...')
