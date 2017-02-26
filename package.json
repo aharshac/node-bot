@@ -1,5 +1,5 @@
 {
-  "name": "node-bot",
+  "name": "NodeBot",
   "version": "1.0.0",
   "description": "Raspberry Pi robot on wheels using Node.js",
   "main": "index.js",
@@ -18,7 +18,7 @@
     "pi",
     "robot"
   ],
-  "author": "Harsha C. Alva",
+  "author": "Harsha Alva",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/aharshac/node-bot/issues"
