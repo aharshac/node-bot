@@ -14,15 +14,4 @@ This project is inspired by the **[raspi-tank](https://github.com/mirceageorgesc
 
 &nbsp;
 
-## Bill of Materials ##
-[Read on Collaborizm](https://www.collaborizm.com/thread/ryjMxzXtl?utm_content=menu_share&utm_source=user_Hyt3y6XK)
-
-&nbsp;
-
-## Hardware Setup ##
-[Read on Collaborizm](https://www.collaborizm.com/thread/HySSiOQKg?utm_content=menu_share&utm_source=user_Hyt3y6XK)
-
-&nbsp;
-
-### Getting the motor directions right! ###
-[Read on Collaborizm](https://www.collaborizm.com/thread/Hkb_Y6Ete?utm_content=menu_share&utm_source=user_Hyt3y6XK)
+For complete info, join the project on [Collaborizm](https://www.collaborizm.com/project/r1dE09adg)
